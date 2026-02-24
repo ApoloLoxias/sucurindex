@@ -1,11 +1,11 @@
 import os
 
-from src.dataclasses import FileEntry
-from parsing import write_toml_file_entry
+from src.dataclasses.file_entry import FileEntry
+from src.parsing import write_toml_file_entry
 
 
 def burn_toml_file_entry(file_entry: FileEntry) -> str:
-    file_path = os.abspath(f"./metadata/{file_entry.id}.toml")
+    file_path = os.path.abspath(f"./metadata/{file_entry.id}.toml")
     content = write_toml_file_entry(file_entry)
 
     try:

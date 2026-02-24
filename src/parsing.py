@@ -3,7 +3,7 @@ import tomlkit
 
 from uuid import UUID
 
-from src.dataclasses import FileEntry
+from src.dataclasses.file_entry import FileEntry
 
 
 
@@ -47,4 +47,4 @@ def write_toml_file_entry(file_entry: FileEntry) -> str:
         "mtime": file_entry.mtime,
         "size": file_entry.size,
     }
-    return tomlkit.dump(dic)
+    return tomlkit.dumps(dic)
