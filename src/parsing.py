@@ -7,7 +7,7 @@ from src.dataclasses import FileEntry
 
 
 
-def read_toml(id: str) -> FileEntry:
+def read_toml_file_entry(id: str) -> FileEntry:
     path = os.path.abspath(f"./metadata/{id}.toml")
 
     if not os.path.exists(path):
@@ -26,4 +26,13 @@ def read_toml(id: str) -> FileEntry:
 
     return file_entry
 
-
+def write_toml_file_entry(file_entry: FileEntry) -> str:
+    dic = {
+        "path": file_entry.path,
+        "name": file_entry.name,
+        "description": file_entry.description,
+        "tags": file_entry.tags,
+        "links": [str(link) for link in file_entry.links],
+        "id": str(file_entry.id),
+    }
+    return tomlkit.dump(dic)
