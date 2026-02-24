@@ -20,10 +20,20 @@ def read_toml_file_entry(id: str) -> FileEntry:
     description = toml.get("description", "")
     tags = list(toml.get("tags", []))
     links = [UUID(link) for link in toml.get("links", [])]
-    id = UUID(toml.get("id"))
+    mtime = toml.get("mtime")
+    size = toml.get("size")
+    uuid = UUID(toml.get("id"))
 
-    file_entry = FileEntry(path=file_path, name=name, description=description, tags=tags, links=links, id=id)
-
+    file_entry = FileEntry(
+        path=file_path,
+        name=name,
+        description=description,
+        tags=tags,
+        links=links,
+        id=uuid,
+        mtime=mtime,
+        size=size,
+    )
     return file_entry
 
 def write_toml_file_entry(file_entry: FileEntry) -> str:
@@ -34,5 +44,7 @@ def write_toml_file_entry(file_entry: FileEntry) -> str:
         "tags": file_entry.tags,
         "links": [str(link) for link in file_entry.links],
         "id": str(file_entry.id),
+        "mtime": file_entry.mtime,
+        "size": file_entry.size,
     }
     return tomlkit.dump(dic)
