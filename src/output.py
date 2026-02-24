@@ -11,6 +11,6 @@ def burn_toml_file_entry(file_entry: FileEntry) -> str:
     try:
         with open(file_path, mode="w") as file:
             file.write(content)
-       return f"Successfully wrote '{file_entry.name}'/{file_entry.id} FileEntry to '{file_path}'"
+        return f"Successfully wrote '{file_entry.name}'/{file_entry.id} FileEntry to '{file_path}'"
     except Exception as e:
         return f"Failed to write '{file_entry.name}'/{file_entry.id} FileEntry to '{file_path}'"
