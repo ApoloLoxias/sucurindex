@@ -1,7 +1,7 @@
 import os
 
 from src.dataclasses.file_entry import FileEntry
-from src.parsing import write_toml_file_entry
+from src.parsing import write_toml_file_entry, filter_list_attribute, filter_single_attribute
 
 
 def burn_toml_file_entry(file_entry: FileEntry) -> str:
@@ -14,6 +14,8 @@ def burn_toml_file_entry(file_entry: FileEntry) -> str:
         return f"Successfully wrote '{file_entry.name}'/{file_entry.id} FileEntry to '{file_path}'"
     except Exception as e:
         return f"Failed to write '{file_entry.name}'/{file_entry.id} FileEntry to '{file_path}'"
+
+
 
 def print_file_entry(file_entry: FileEntry, tags: list[str]=None) -> str:
     output = []
@@ -42,3 +44,17 @@ def print_file_entry(file_entry: FileEntry, tags: list[str]=None) -> str:
     for line in output:
         print(line)
     return f"Printed FileEntry '{file_entry.name}'/{file_entry.id}'s {tags} to console"
+
+
+
+def print_filter(universe: list[FileEntry], parameters: dict) -> None:
+    output = []
+
+    for attr, term in parameters.items():
+        if isinstance(getattr(universe[0], attr), list):
+            output.append(filter_list_attribute(universe, attr, term))
+
+        else:
+            output.append(filter_single_attribute(universe, attr, term))
+
+    print(output)

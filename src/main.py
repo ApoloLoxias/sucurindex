@@ -11,9 +11,8 @@ def main():
     print("Starting manual test for SuccurIndex")
     
     file_entries = list_file_entries()
-    print(
-        filter_file_entries({"tags": ["beach"]})
-    )
+
+    print_filter(file_entries, {"tags": "beach", "name": "README.md"})
 
     print("Test concluded")
 

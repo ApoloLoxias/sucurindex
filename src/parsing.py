@@ -36,6 +36,8 @@ def read_toml_file_entry(id: str) -> FileEntry:
     )
     return file_entry
 
+
+
 def write_toml_file_entry(file_entry: FileEntry) -> str:
     dic = {
         "path": file_entry.path,
@@ -48,3 +50,32 @@ def write_toml_file_entry(file_entry: FileEntry) -> str:
         "size": file_entry.size,
     }
     return tomlkit.dumps(dic)
+
+
+
+def filter_single_attribute(universe: list[FileEntry], attr: str, term, debug: bool=False) -> list[FileEntry]:
+    output = []
+
+    for fe in universe:
+        if debug: print(f"{getattr(fe, attr)} = {term}?")
+        if getattr(fe, attr) == term:
+            if debug: print("yes")
+            output.append(fe)
+        else:
+            if debug: print("no")
+        if debug: print("")
+
+    return output
+
+def filter_list_attribute(universe: list[FileEntry], attr: str, term, debug: bool=False) -> list[FileEntry]:
+    output = []
+
+    for fe in universe:
+        if debug: print(f"{term} in {getattr(fe, attr)}?")
+        if term in getattr(fe, attr):
+            if debug: print("yes")
+            output.append(fe)
+        elif debug: print("no")
+        if debug: print("")
+
+    return output
