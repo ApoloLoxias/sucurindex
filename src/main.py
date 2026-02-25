@@ -10,7 +10,10 @@ from src.parsing import *
 def main():
     print("Starting manual test for SuccurIndex")
     
-    print(list_file_entries())
+    file_entries = list_file_entries()
+    print(
+        filter_file_entries({"tags": ["beach"]})
+    )
 
     print("Test concluded")
 
