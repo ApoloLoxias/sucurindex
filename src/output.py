@@ -4,10 +4,11 @@ from uuid import UUID
 
 from src.dataclasses.file_entry import FileEntry
 from src.parsing import write_toml_file_entry, filter_list_attribute, filter_single_attribute
+from src.config import get_pstorage
 
 
 def burn_toml_file_entry(file_entry: FileEntry) -> str:
-    file_path = os.path.abspath(f"./metadata/{file_entry.id}.toml")
+    file_path = os.path.join(get_pstorage(), f"{file_entry.id}.toml")
     content = write_toml_file_entry(file_entry)
 
     try:

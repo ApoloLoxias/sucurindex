@@ -2,7 +2,7 @@ import os
 
 from src.dataclasses import FileEntry
 from src.parsing import read_toml_file_entry
-
+from src.config import get_pstorage
 
 
 def read_file_metadata(path: str) -> dict:
@@ -23,7 +23,7 @@ def read_file_metadata(path: str) -> dict:
 def list_file_entries() -> list[FileEntry]:
     from src.parsing import read_toml_file_entry
 
-    files = [f for f in os.listdir(os.path.abspath("./metadata")) if f.endswith(".toml")]
+    files = [f for f in os.listdir(get_pstorage()) if f.endswith(".toml")]
     ids = [file[:-5] for file in files]
     file_entries = [read_toml_file_entry(id) for id in ids]
     
@@ -32,11 +32,11 @@ def list_file_entries() -> list[FileEntry]:
 
 
 def check_entries() -> dict[str, list[FileEntry]]:
-    directory = os.path.abspath("./metadata")
+    directory = get_pstorage()
     output = {"changed": [], "missing": [], "unaltered": []}
 
     for file in os.listdir(directory):
-        path = os.path.abspath(os.path.join("./metadata", file))
+        path = os.path.join(get_pstorage(), file)
         file_entry = read_toml_file_entry(file[:-5])
 
         if not os.path.exists(os.path.abspath(file_entry.path)):

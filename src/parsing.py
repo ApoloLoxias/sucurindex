@@ -4,11 +4,12 @@ import tomlkit
 from uuid import UUID
 
 from src.dataclasses.file_entry import FileEntry
+from src.config import get_pstorage
 
 
 
 def read_toml_file_entry(id: str) -> FileEntry:
-    path = os.path.abspath(f"./metadata/{id}.toml")
+    path = os.path.join(get_pstorage(), f"{id}.toml")
 
     if not os.path.exists(path):
         raise FileNotFoundError(f"{id} FileEntry not found")
