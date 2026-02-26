@@ -1,5 +1,7 @@
 import os
 
+from uuid import UUID
+
 from src.dataclasses.file_entry import FileEntry
 from src.parsing import write_toml_file_entry, filter_list_attribute, filter_single_attribute
 
@@ -28,6 +30,7 @@ def print_file_entry(file_entry: FileEntry, tags: list[str]=None) -> str:
             "links",
             "mtime",
             "size",
+            "missing",
         ]
 
     if not tags:
@@ -58,3 +61,13 @@ def print_filter(universe: list[FileEntry], parameters: dict) -> None:
             output.append(filter_single_attribute(universe, attr, term))
 
     print(output)
+
+
+
+def delete_file_entry(id: UUID) -> str:
+    path = os.path.abspath(f"./metadata/{id}.toml")
+
+    if os.path.isfile(path):
+        os.remove(path)
+        return f"Successfully deleted file entry {id}"
+    return f"Could not find file entry {id}"

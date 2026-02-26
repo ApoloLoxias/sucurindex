@@ -1,6 +1,8 @@
 import os
 
 from src.dataclasses import FileEntry
+from src.parsing import read_toml_file_entry
+
 
 
 def read_file_metadata(path: str) -> dict:
@@ -16,6 +18,8 @@ def read_file_metadata(path: str) -> dict:
 
     return result
 
+
+
 def list_file_entries() -> list[FileEntry]:
     from src.parsing import read_toml_file_entry
 
@@ -24,3 +28,44 @@ def list_file_entries() -> list[FileEntry]:
     file_entries = [read_toml_file_entry(id) for id in ids]
     
     return file_entries
+
+
+
+def check_entries() -> dict[str, list[FileEntry]]:
+    directory = os.path.abspath("./metadata")
+    output = {"changed": [], "missing": [], "unaltered": []}
+
+    for file in os.listdir(directory):
+        path = os.path.abspath(os.path.join("./metadata", file))
+        file_entry = read_toml_file_entry(file[:-5])
+
+        if not os.path.exists(os.path.abspath(file_entry.path)):
+            output["missing"].append(file_entry)
+            continue
+        else:
+            metadata = read_file_metadata(os.path.abspath(file_entry.path))
+            has_changed = False
+            for k, v in metadata.items():
+                if getattr(file_entry, k) != v:
+                    has_changed = True
+                    break
+            if has_changed:
+                output["changed"].append(file_entry)
+            else:
+                output["unaltered"].append(file_entry)
+
+    return output
+
+
+
+def slither(rootpath: str) -> list[str]:
+    absrootpath = os.path.abspath(rootpath)
+    paths = []
+
+    entries = os.walk(absrootpath)
+    for dirpath, dirname, filenames in entries:
+        for filename in filenames:
+            path = os.path.join(dirpath, filename)
+            paths.append(os.path.abspath(path))
+
+    return paths
