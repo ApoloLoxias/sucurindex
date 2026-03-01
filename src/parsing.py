@@ -20,7 +20,8 @@ def read_toml_file_entry(id: str) -> FileEntry:
     name = toml.get("name")
     description = toml.get("description", "")
     tags = list(toml.get("tags", []))
-    links = [UUID(link) for link in toml.get("links", [])]
+    print(toml.get("links", [])) ## DEBUG
+    links = [UUID(link) for link in toml.get("links", [])] if toml.get("links", []) else []
     mtime = toml.get("mtime")
     size = toml.get("size")
     uuid = UUID(toml.get("id"))
@@ -45,14 +46,22 @@ def write_toml_file_entry(file_entry: FileEntry) -> str:
     dic = {
         "path": file_entry.path,
         "name": file_entry.name,
-        "description": file_entry.description,
-        "tags": file_entry.tags,
-        "links": [str(link) for link in file_entry.links],
+        "description": file_entry.description if file_entry.description else "",
+        "tags": file_entry.tags if file_entry.tags else [],
+        "links": [str(link) for link in file_entry.links] if file_entry.links else [],
         "id": str(file_entry.id),
         "mtime": file_entry.mtime,
         "size": file_entry.size,
         "missing": file_entry.missing
     }
+
+    ##DEBUG##
+    print(f"dic: {dic}")
+    for k, v in dic.items():
+        if v is None:
+            print(f"dic{'k'} is None")
+    ## DEBUG END##
+
     return tomlkit.dumps(dic)
 
 

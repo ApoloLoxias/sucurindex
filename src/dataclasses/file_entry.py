@@ -25,7 +25,7 @@ class FileEntry:
         self.id = id if id else uuid4()
         self.mtime = mtime if mtime else os.stat(self.path).st_mtime
         self.size = size if size else os.stat(self.path).st_size
-        self.missing = missing
+        self.missing = missing if missing else False
 
     def __repr__(self) -> str:
         return f"FileEntry=(id={self.id}, name={self.name}, path={self.path}, description={self.description}, tags={self.tags}, links={self.links}, mtime={self.mtime}, size={self.size}, missing={self.missing})"
