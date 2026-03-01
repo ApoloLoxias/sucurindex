@@ -19,7 +19,7 @@ class FileEntry:
         if not os.path.isfile(path): raise Exception("path is not a valid file")
         self.path =  os.path.abspath(path)
         self.name = name if name else os.path.basename(path)
-        self.description = description
+        self.description = description if description else ""
         self.tags = tags if tags else []
         self.links = links if links else []
         self.id = id if id else uuid4()
