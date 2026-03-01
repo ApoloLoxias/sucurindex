@@ -41,7 +41,7 @@ class FileEntry:
             f"Tags: {self.tags}\n"
             f"Links: {self.links}\n"
             f"Mtime: {datetime.datetime.fromtimestamp(self.mtime)}\n"
-            f"Size: {self.size}"
+            f"Size: {self.size}\n"
             f"Missing: {self.missing}"
         )
 

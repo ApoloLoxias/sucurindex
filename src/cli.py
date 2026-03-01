@@ -6,7 +6,8 @@ from uuid import UUID
 
 from src.dataclasses import FileEntry
 from src.file_system import list_file_entries
-from src.output import burn_toml_file_entry, delete_file_entry
+from src.output import burn_toml_file_entry, delete_file_entry, print_file_entry
+from src.parsing import read_toml_file_entry
 
 
 def main():
@@ -28,8 +29,7 @@ def main():
     parser_list.add_argument("y", type=int)
 
     parser_read = subparsers.add_parser("read")
-    parser_read.add_argument("x", type=int)
-    parser_read.add_argument("y", type=int)
+    parser_read.add_argument("id", type=str)
 
     parser_sync = subparsers.add_parser("sync")
     parser_sync.add_argument("x", type=int)
@@ -79,8 +79,9 @@ def cmd_remove(id: str):
 def cmd_list(x, y):
     print(f"{x}+{y}")
 
-def cmd_read(x, y):
-    print(f"{x}-{y}")
+def cmd_read(id: str):
+    file_entry = read_toml_file_entry(id)
+    print_file_entry(file_entry)
 
 def cmd_sync(x,y):
     print(f"{x}{y}")
