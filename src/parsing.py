@@ -75,15 +75,19 @@ def filter_single_attribute(universe: list[FileEntry], attr: str, term, debug: b
 
 def filter_list_attribute(universe: list[FileEntry], attr: str, term, debug: bool=False) -> list[FileEntry]:
     output = []
+    print(f"filtering file entries: {[fe.id for fe in universe]} for {attr}: {term}")
 
-    for fe in universe:
-        if debug: print(f"{term} in {getattr(fe, attr)}?")
-        if term in getattr(fe, attr):
-            if debug: print("yes")
-            output.append(fe)
-        elif debug: print("no")
-        if debug: print("")
+    for t in term:
+        if debug: print(f"filtering for element {t}")
+        for fe in universe:
+            if debug: print(f"{t} in {getattr(fe, attr)}?")
+            if t in getattr(fe, attr):
+                if debug: print("yes, appending to output")
+                output.append(fe)
+            else: print("no")
+            if debug: print(f"returning file entries: {[fe.id for fe in output]}")
 
+    if debug: print(f"file entries {[fe.id for fe in output]} filtered in")
     return output
 
 

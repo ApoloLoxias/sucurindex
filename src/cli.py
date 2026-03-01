@@ -7,7 +7,7 @@ from uuid import UUID
 from src.dataclasses import FileEntry
 from src.file_system import list_file_entries, read_file_metadata
 from src.output import burn_toml_file_entry, delete_file_entry, print_file_entry
-from src.parsing import read_toml_file_entry, update_file_entry, update_list_attribute
+from src.parsing import read_toml_file_entry, update_file_entry, update_list_attribute, filter_list_attribute, filter_single_attribute
 from src.config import get_pstorage
 
 
@@ -26,8 +26,12 @@ def main():
     parser_remove.add_argument("id", type=str)
 
     parser_list = subparsers.add_parser("list")
-    parser_list.add_argument("x", type=int)
-    parser_list.add_argument("y", type=int)
+    parser_list.add_argument("--id", type=str)
+    parser_list.add_argument("--name", type=str)
+    parser_list.add_argument("--description", type=str)
+    parser_list.add_argument("--tags", type=str, nargs="*")
+    parser_list.add_argument("--links", type=str, nargs="*")
+
 
     parser_read = subparsers.add_parser("read")
     parser_read.add_argument("id", type=str)
@@ -37,7 +41,7 @@ def main():
     parser_sync.add_argument("y", type=int)
 
     parser_edit = subparsers.add_parser("edit")
-    parser_edit.add_argument("id", type=str)
+    parser_edit.add_argument("--id", type=str)
     parser_edit.add_argument("--name", type=str)
     parser_edit.add_argument("--description", type=str)
     parser_edit.add_argument("--links", type=str, nargs='*')
@@ -84,8 +88,24 @@ def cmd_remove(id: str):
     uuid = UUID(id)
     print(delete_file_entry(uuid))
 
-def cmd_list(x, y):
-    print(f"{x}+{y}")
+def cmd_list(id, name, description, tags, links):
+    params = locals().copy().items()
+    fes = list_file_entries()
+
+    for param, value in params:
+        if value:
+            if isinstance(value, list):
+                fes = filter_list_attribute(fes, param, value)
+            else:
+                fes = filter_single_attribute(fes, param, value)
+
+
+    for fe in fes:
+        print(f"{fe.name} | {fe.id}")
+        print(fe.path)
+        print(fe.description)
+        print("- - - - - - - - - - - ")
+
 
 def cmd_read(id: str):
     file_entry = read_toml_file_entry(id)
