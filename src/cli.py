@@ -6,7 +6,7 @@ from uuid import UUID
 
 from src.dataclasses import FileEntry
 from src.file_system import list_file_entries
-from src.output import burn_toml_file_entry
+from src.output import burn_toml_file_entry, delete_file_entry
 
 
 def main():
@@ -21,8 +21,7 @@ def main():
     parser_add.add_argument("--links", type=str, default=None, nargs='*')
 
     parser_remove = subparsers.add_parser("remove")
-    parser_remove.add_argument("x", type=int)
-    parser_remove.add_argument("y", type=int)
+    parser_remove.add_argument("id", type=str)
 
     parser_list = subparsers.add_parser("list")
     parser_list.add_argument("x", type=int)
@@ -73,8 +72,9 @@ def cmd_add(path: str, name: str, description: str, tags: list[str], links: list
 
 
 
-def cmd_remove(x, y):
-    print(x-y)
+def cmd_remove(id: str):
+    uuid = UUID(id)
+    print(delete_file_entry(uuid))
 
 def cmd_list(x, y):
     print(f"{x}+{y}")
