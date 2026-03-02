@@ -37,8 +37,7 @@ def main():
     parser_read.add_argument("id", type=str)
 
     parser_sync = subparsers.add_parser("sync")
-    parser_sync.add_argument("x", type=int)
-    parser_sync.add_argument("y", type=int)
+    parser_sync.add_argument("--hard", action="store_true")
 
     parser_edit = subparsers.add_parser("edit")
     parser_edit.add_argument("--id", type=str)
@@ -111,8 +110,29 @@ def cmd_read(id: str):
     file_entry = read_toml_file_entry(id)
     print_file_entry(file_entry)
 
-def cmd_sync(x,y):
-    print(f"{x}{y}")
+def cmd_sync(hard: bool=False):
+    entries = list_file_entries()
+    missing = []
+    ok = []
+    changed = []
+    for entry in entries:
+        if not os.path.isfile(entry.path):
+            missing.append(entry)
+            if hard:
+                uentry = update_file_entry(entry, {"missing": True})
+                burn_toml_file_entry(uentry)
+        else:
+            metadata = read_file_metadata(entry)
+            if entry.mtime != metadata["mtime"] or entry.size != metadata["size"]:
+                changed.append(entry)
+                if hard:
+                    uentry = update_file_entry(entry, {"mtime": metadata["mtime"], "size": metadata["size"]})
+            else: ok.append(entry)
+
+    print(f"Missing: {[(fe.name, fe.id) for fe in missing]}")
+    print(f"Changed: {[(fe.name, fe.id) for fe in changed]}")
+    print(f"Ok: {[(fe.name, fe.id) for fe in ok]}")
+    return {"missing": missing, "changed": changed, "ok": ok}
 
 def cmd_edit(id: str, name: str=None, description: str=None, tags: list[str]=None, links: list[str]=None, atags: list[str]=None, rtags: list[str]=None, alinks: list[str]=None, rlinks: list[str]=None):
     if (tags and (atags or rtags)) or (links and (alinks or rlinks)):
@@ -121,7 +141,7 @@ def cmd_edit(id: str, name: str=None, description: str=None, tags: list[str]=Non
 
     path = (os.path.join(get_pstorage(), f"{id}.toml"))
     file_entry = read_toml_file_entry(id)
-    metadata = read_file_metadata(path)
+    metadata = read_file_metadata(file_entry.path)
 
     updated_attributes = {}
     if name: updated_attributes["name"] = name
