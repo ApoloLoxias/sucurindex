@@ -5,9 +5,10 @@ from uuid import UUID
 
 from src.dataclasses.file_entry import FileEntry
 from src.config import get_pstorage
+from src.logging import log_calls
 
 
-
+@log_calls()
 def read_toml_file_entry(id: str, skip_path_validation: bool=False) -> FileEntry:
     path = os.path.join(get_pstorage(), f"{id}.toml")
 
@@ -41,7 +42,7 @@ def read_toml_file_entry(id: str, skip_path_validation: bool=False) -> FileEntry
     return file_entry
 
 
-
+@log_calls()
 def write_toml_file_entry(file_entry: FileEntry) -> str:
     dic = {
         "path": file_entry.path,
@@ -57,7 +58,7 @@ def write_toml_file_entry(file_entry: FileEntry) -> str:
     return tomlkit.dumps(dic)
 
 
-
+@log_calls()
 def filter_single_attribute(universe: list[FileEntry], attr: str, term, debug: bool=False) -> list[FileEntry]:
     output = []
 
@@ -73,7 +74,7 @@ def filter_single_attribute(universe: list[FileEntry], attr: str, term, debug: b
     return output
 
 
-
+@log_calls()
 def filter_list_attribute(universe: list[FileEntry], attr: str, term, debug: bool=False) -> list[FileEntry]:
     output = []
     print(f"filtering file entries: {[fe.id for fe in universe]} for {attr}: {term}")
@@ -92,7 +93,7 @@ def filter_list_attribute(universe: list[FileEntry], attr: str, term, debug: boo
     return output
 
 
-
+@log_calls()
 def update_file_entry(file_entry: FileEntry, attributes: dict) -> FileEntry:
     upd_attr = {}
 
@@ -105,7 +106,7 @@ def update_file_entry(file_entry: FileEntry, attributes: dict) -> FileEntry:
     return FileEntry(**upd_attr)
 
 
-
+@log_calls()
 def update_list_attribute(attr: list, item, mode) -> list:
     # Mode accepts "a" for appending and "r" for removing
     new_attr = attr.copy()

@@ -9,8 +9,11 @@ from src.file_system import list_file_entries, read_file_metadata, slither
 from src.output import burn_toml_file_entry, delete_file_entry, print_file_entry
 from src.parsing import read_toml_file_entry, update_file_entry, update_list_attribute, filter_list_attribute, filter_single_attribute
 from src.config import get_pstorage
+from src.logging import log_calls, main_with_logging
 
 
+############################################################
+@log_calls()
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command")
@@ -62,7 +65,8 @@ def main():
     command(**inner_args)
 
 
-
+############################################################
+@log_calls()
 def cmd_add(path: str, name: str, description: str, tags: list[str], links: list[str]):
     norm_path = os.path.abspath(path)
     file_entries = list_file_entries()
@@ -85,7 +89,7 @@ def cmd_add(path: str, name: str, description: str, tags: list[str], links: list
     return f"New entry successfully indexed: {new_entry.id}"
 
 
-
+@log_calls()
 def cmd_remove(id: str):
     confirmation = input(f"Delete the following FileEntry?\n{print_file_entry(read_toml_file_entry(id))}\n[y/N]?")
     if confirmation.lower() == "y":
@@ -94,6 +98,8 @@ def cmd_remove(id: str):
     print("Operation cancelled")
     return f"Cancelled removal of FileEntry {id}"
 
+
+@log_calls()
 def cmd_list(id, name, description, tags, links):
     params = locals().copy().items()
     fes = list_file_entries()
@@ -105,7 +111,6 @@ def cmd_list(id, name, description, tags, links):
             else:
                 fes = filter_single_attribute(fes, param, value)
 
-
     for fe in fes:
         print(f"{fe.name} | {fe.id}")
         print(fe.path)
@@ -113,10 +118,13 @@ def cmd_list(id, name, description, tags, links):
         print("- - - - - - - - - - - ")
 
 
+@log_calls()
 def cmd_read(id: str):
     file_entry = read_toml_file_entry(id)
     print_file_entry(file_entry)
 
+
+@log_calls()
 def cmd_sync(hard: bool=False):
     entries = list_file_entries()
     missing = []
@@ -141,6 +149,8 @@ def cmd_sync(hard: bool=False):
     print(f"Ok: {[(fe.name, fe.id) for fe in ok]}")
     return {"missing": missing, "changed": changed, "ok": ok}
 
+
+@log_calls()
 def cmd_edit(id: str, name: str=None, description: str=None, tags: list[str]=None, links: list[str]=None, atags: list[str]=None, rtags: list[str]=None, alinks: list[str]=None, rlinks: list[str]=None):
     if (tags and (atags or rtags)) or (links and (alinks or rlinks)):
         print("Incompatible tags usage: list attributes must either be specified or have items added and removed, not both")
@@ -183,12 +193,12 @@ def cmd_edit(id: str, name: str=None, description: str=None, tags: list[str]=Non
     print(burn_toml_file_entry(updated_file_entry))
 
 
+@log_calls()
 def cmd_slither(path: str):
     file_paths = slither(path)
-    for path in file_paths: cmd_add(path, None, None, None, None)
+    for file_path in file_paths: cmd_add(file_path, None, None, None, None)
     print(f"Done slithering through {path}")
     return
-
 
 
 
@@ -203,9 +213,10 @@ commands = {
 }
 
 
-
+############################################################
 if __name__ == "__main__":
-    main()
+    from src.logging import main_with_logging
+    main_with_logging(main)
 
 
 

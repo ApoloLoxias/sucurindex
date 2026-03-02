@@ -29,10 +29,14 @@ class FileEntry:
             self.mtime = mtime
         elif (not missing) and (not skip_path_validation):
             self.mtime = os.stat(self.path).st_mtime
+        else:
+            self.mtime = 0
         if size:
             self.size = size
         elif (not missing) and (not skip_path_validation):
             self.size = os.stat(self.path).st_size
+        else:
+            self.size = 0
         self.missing = missing if missing else False
 
     def __repr__(self) -> str:

@@ -3,8 +3,10 @@ import os
 from src.dataclasses import FileEntry
 from src.parsing import read_toml_file_entry
 from src.config import get_pstorage
+from src.logging import log_calls
 
 
+@log_calls()
 def read_file_metadata(path: str) -> dict:
     file_path = os.path.abspath(path)
 
@@ -19,7 +21,7 @@ def read_file_metadata(path: str) -> dict:
     return result
 
 
-
+@log_calls()
 def list_file_entries() -> list[FileEntry]:
     from src.parsing import read_toml_file_entry
 
@@ -30,7 +32,7 @@ def list_file_entries() -> list[FileEntry]:
     return file_entries
 
 
-
+@log_calls()
 def check_entries() -> dict[str, list[FileEntry]]:
     directory = get_pstorage()
     output = {"changed": [], "missing": [], "unaltered": []}
@@ -57,7 +59,7 @@ def check_entries() -> dict[str, list[FileEntry]]:
     return output
 
 
-
+@log_calls()
 def slither(rootpath: str) -> list[str]:
     absrootpath = os.path.abspath(rootpath)
     paths = []

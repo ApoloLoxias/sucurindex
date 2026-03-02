@@ -5,8 +5,10 @@ from uuid import UUID
 from src.dataclasses.file_entry import FileEntry
 from src.parsing import write_toml_file_entry, filter_list_attribute, filter_single_attribute
 from src.config import get_pstorage
+from src.logging import log_calls
 
 
+@log_calls()
 def burn_toml_file_entry(file_entry: FileEntry) -> str:
     file_path = os.path.join(get_pstorage(), f"{file_entry.id}.toml")
     content = write_toml_file_entry(file_entry)
@@ -19,7 +21,7 @@ def burn_toml_file_entry(file_entry: FileEntry) -> str:
         return f"Failed to write '{file_entry.name}'/{file_entry.id} FileEntry to '{file_path}'"
 
 
-
+@log_calls()
 def print_file_entry(file_entry: FileEntry, tags: list[str]=None) -> str:
     output = []
     invalid_tags = []
@@ -51,6 +53,7 @@ def print_file_entry(file_entry: FileEntry, tags: list[str]=None) -> str:
 
 
 
+@log_calls()
 def print_filter(universe: list[FileEntry], parameters: dict) -> None:
     output = []
 
@@ -64,7 +67,7 @@ def print_filter(universe: list[FileEntry], parameters: dict) -> None:
     print(output)
 
 
-
+@log_calls()
 def delete_file_entry(id: UUID) -> str:
     path = os.path.abspath(f"./metadata/{id}.toml")
 
