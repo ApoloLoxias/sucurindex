@@ -14,17 +14,25 @@ class FileEntry:
         mtime: float=None,
         size: int=None,
         missing: bool=False,
+        skip_path_validation: bool=False
     ) -> None:
 
-        if not os.path.isfile(path): raise Exception("path is not a valid file")
+        if (not missing) and (not skip_path_validation):
+            if not os.path.isfile(path): raise Exception("path is not a valid file")
         self.path =  os.path.abspath(path)
         self.name = name if name else os.path.basename(path)
         self.description = description if description else ""
         self.tags = tags if tags else []
         self.links = links if links else []
         self.id = id if id else uuid4()
-        self.mtime = mtime if mtime else os.stat(self.path).st_mtime
-        self.size = size if size else os.stat(self.path).st_size
+        if mtime:
+            self.mtime = mtime
+        elif (not missing) and (not skip_path_validation):
+            self.mtime = os.stat(self.path).st_mtime
+        if size:
+            self.size = size
+        elif (not missing) and (not skip_path_validation):
+            self.size = os.stat(self.path).st_size
         self.missing = missing if missing else False
 
     def __repr__(self) -> str:

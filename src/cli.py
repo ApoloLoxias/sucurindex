@@ -129,7 +129,7 @@ def cmd_sync(hard: bool=False):
                 uentry = update_file_entry(entry, {"missing": True})
                 burn_toml_file_entry(uentry)
         else:
-            metadata = read_file_metadata(entry)
+            metadata = read_file_metadata(entry.path)
             if entry.mtime != metadata["mtime"] or entry.size != metadata["size"]:
                 changed.append(entry)
                 if hard:
@@ -185,7 +185,7 @@ def cmd_edit(id: str, name: str=None, description: str=None, tags: list[str]=Non
 
 def cmd_slither(path: str):
     file_paths = slither(path)
-    for paths in file_paths: cmd_add(path, None, None, None, None)
+    for path in file_paths: cmd_add(path, None, None, None, None)
     print(f"Done slithering through {path}")
     return
 

@@ -25,7 +25,7 @@ def list_file_entries() -> list[FileEntry]:
 
     files = [f for f in os.listdir(get_pstorage()) if f.endswith(".toml")]
     ids = [file[:-5] for file in files]
-    file_entries = [read_toml_file_entry(id) for id in ids]
+    file_entries = [read_toml_file_entry(id, skip_path_validation=True) for id in ids]
     
     return file_entries
 
@@ -37,7 +37,7 @@ def check_entries() -> dict[str, list[FileEntry]]:
 
     for file in os.listdir(directory):
         path = os.path.join(get_pstorage(), file)
-        file_entry = read_toml_file_entry(file[:-5])
+        file_entry = read_toml_file_entry(file[:-5], skip_path_validation=True)
 
         if not os.path.exists(os.path.abspath(file_entry.path)):
             output["missing"].append(file_entry)

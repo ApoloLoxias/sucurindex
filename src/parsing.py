@@ -8,7 +8,7 @@ from src.config import get_pstorage
 
 
 
-def read_toml_file_entry(id: str) -> FileEntry:
+def read_toml_file_entry(id: str, skip_path_validation: bool=False) -> FileEntry:
     path = os.path.join(get_pstorage(), f"{id}.toml")
 
     if not os.path.exists(path):
@@ -36,6 +36,7 @@ def read_toml_file_entry(id: str) -> FileEntry:
         mtime=mtime,
         size=size,
         missing=missing,
+        skip_path_validation=skip_path_validation
     )
     return file_entry
 
@@ -51,7 +52,7 @@ def write_toml_file_entry(file_entry: FileEntry) -> str:
         "id": str(file_entry.id),
         "mtime": file_entry.mtime,
         "size": file_entry.size,
-        "missing": file_entry.missing
+        "missing": file_entry.missing,
     }
     return tomlkit.dumps(dic)
 
