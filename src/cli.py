@@ -84,8 +84,12 @@ def cmd_add(path: str, name: str, description: str, tags: list[str], links: list
 
 
 def cmd_remove(id: str):
-    uuid = UUID(id)
-    print(delete_file_entry(uuid))
+    confirmation = input(f"Delete the following FileEntry?\n{print_file_entry(read_toml_file_entry(id))}\n[y/N]?")
+    if confirmation.lower() = "y":
+        uuid = UUID(id)
+        print(delete_file_entry(uuid))
+    print("Operation cancelled")
+    return f"Cancelled removal of FileEntry {id}"
 
 def cmd_list(id, name, description, tags, links):
     params = locals().copy().items()
