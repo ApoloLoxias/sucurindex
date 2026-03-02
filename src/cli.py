@@ -5,7 +5,7 @@ import os
 from uuid import UUID
 
 from src.dataclasses import FileEntry
-from src.file_system import list_file_entries, read_file_metadata
+from src.file_system import list_file_entries, read_file_metadata, slither
 from src.output import burn_toml_file_entry, delete_file_entry, print_file_entry
 from src.parsing import read_toml_file_entry, update_file_entry, update_list_attribute, filter_list_attribute, filter_single_attribute
 from src.config import get_pstorage
@@ -50,6 +50,9 @@ def main():
     parser_edit.add_argument("--atags", type=str, nargs='*')
     parser_edit.add_argument("--rtags", type=str, nargs='*')
 
+    parser_slither = subparsers.add_parser("slither")
+    parser_slither.add_argument("path", type=str)
+
     args = parser.parse_args()
 
     command = commands[args.command]
@@ -85,7 +88,7 @@ def cmd_add(path: str, name: str, description: str, tags: list[str], links: list
 
 def cmd_remove(id: str):
     confirmation = input(f"Delete the following FileEntry?\n{print_file_entry(read_toml_file_entry(id))}\n[y/N]?")
-    if confirmation.lower() = "y":
+    if confirmation.lower() == "y":
         uuid = UUID(id)
         print(delete_file_entry(uuid))
     print("Operation cancelled")
@@ -180,7 +183,11 @@ def cmd_edit(id: str, name: str=None, description: str=None, tags: list[str]=Non
     print(burn_toml_file_entry(updated_file_entry))
 
 
-
+def cmd_slither(path: str):
+    file_paths = slither(path)
+    for paths in file_paths: cmd_add(path, None, None, None, None)
+    print(f"Done slithering through {path}")
+    return
 
 
 
@@ -192,6 +199,7 @@ commands = {
     "read": cmd_read,
     "sync": cmd_sync,
     "edit": cmd_edit,
+    "slither": cmd_slither,
 }
 
 
