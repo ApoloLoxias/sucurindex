@@ -150,6 +150,8 @@ cross OS compatibility
 and DB generation functions - Both important, performance bottlenicking
 operations that would benefit greatly from go's concurrency and pre-compiled
 performance gains
+- Go/multi-language use is experimental and project may revert to pure Python
+or even evolve into pure Go in the future
 
 ---
 
