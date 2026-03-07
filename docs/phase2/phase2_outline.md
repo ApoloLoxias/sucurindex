@@ -159,7 +159,7 @@ operations that would benefit greatly from go's concurrency and pre-compiled
 performance gains
 - Thinking about integrating different languages (compiled and interpreted!)
 should be a valuable learning experience, even if this idea is not to see much
-further development or even doomed to getting discarded in the future
+further development or even be doomed to getting discarded in the future
 - Go/multi-language use is experimental and project may revert to pure Python
 or even evolve into pure Go in the future
 
