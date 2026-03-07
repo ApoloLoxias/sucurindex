@@ -46,6 +46,8 @@ now written is still expected to be discarded and, therefore, must not have
 effort spent on beyond the essential.
 
 ### VI. Standardize libraries and dependecies, and make their use consistent
+Briefly explore different solutions, like os.path and pathlib, to devide on
+which should be used
 
 ---
 
@@ -150,6 +152,9 @@ cross OS compatibility
 and DB generation functions - Both important, performance bottlenicking
 operations that would benefit greatly from go's concurrency and pre-compiled
 performance gains
+- Thinking about integrating different languages (compiled and interpreted!)
+should be a valuable learning experience, even if this idea is not to see much
+further development or even doomed to getting discarded in the future
 - Go/multi-language use is experimental and project may revert to pure Python
 or even evolve into pure Go in the future
 
@@ -159,10 +164,11 @@ or even evolve into pure Go in the future
 1. Markdown metadata storage - The foundation for Phase 2 changes
 2. SQLite implementation -  Will optimze and expand backend functionality
 3. GO experiments - in hopes of better bulk i/o, db generation and future file
-system watching
-4. Multi-device support - To be actively embeded on the schemas for #1 and #2
-5. Git and Wiki integration - Should come naturally with #1 and #2
+system watching/daemon usage
+4. Complete the code base with python for the business logic + a simple cli
+5. Multi-device support - To be actively embeded on the schemas for #1 and #2
+6.. Git and Wiki integration - Should come naturally with #1 and #2
 
 ---
 
-"Amphibians invaded the land. Repitles conquered the skies."
+"Amphibians invaded the land. Reptiles conquered the skies."
