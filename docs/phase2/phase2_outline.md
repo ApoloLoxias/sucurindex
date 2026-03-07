@@ -118,6 +118,11 @@ to be tied down to a specific tool
 core logic and database layers, but not really supproted by wiki/frontend (like
 typed, directional, semantic links). Example:
 """[uuid|display_name]<!--direction=outgoin, type=inspired_by,-->"""
+- Use pure markdown for phase 2, since yaml, frontmatter and similar structures
+have some interpretation nuances that change accordian to GUI tool, so I will
+steer clear from them for now to remain tool-agnostic
+- Developing and using  strict and simple formating/structuring rules will keep
+it easy to parse, edit manually and understand visually
 
 ---
 
