@@ -69,3 +69,6 @@ readability. However, it would be best to parse strictly for metadata class
 header, ignoring order, to keep the parsing machinery robust and not break
 backward compatibility in case of schema ordering change. For now:
 Paths/storage > filetype > links > tags > size > mtime > missing
+
+---
+Marks mandate meaning
