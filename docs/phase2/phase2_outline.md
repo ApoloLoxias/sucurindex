@@ -176,4 +176,24 @@ system watching/daemon usage
 
 ---
 
+## 9. Midcourse Adjustment
+Modelling metadata for multidevice support has proven a very complex endeavour
+that will require core functionality extensions. Since it is an important
+architectural crossroads which will inform future design decisions, we will go
+at it right now, but we'll need some roadmap adjustments to controle the scope
+of phase 2. The current phase will be strictly about mardkown and database
+schemas and metadata modelling. We will drop git and wiki integration (they
+should be easily integrated later on top of the foundation we are setting up),
+multi-language integration and all user and dev experience - including CLI
+commands and logging. What we need is:
+1. The schemas, including for the modeling of storage. These will be very well
+documented, including their design rationales
+2. Simple scripts for indexing files on a directory and creating DB from the
+index. We'll use golang for those, so we can get some early experimentation
+3. Querying the DB with raw squeal to test its behaviour and discoverability
+
+Making a fully functional, user-friendly programm will be defered to phase 3
+
+---
+
 "Amphibians invaded the land. Reptiles conquered the skies."
