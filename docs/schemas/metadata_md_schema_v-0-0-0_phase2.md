@@ -35,14 +35,13 @@ id (a metadata class assigned by SucurIndex) of the taxon stored in that file.
 A MboiDown v0.0.0 file has exactly line which is a level one markdown header.
 This line is the first non-blanck line of the document and is written strictly
 in the format "# NAME\n", where "\n" is a newline charcter, NAME represents a
-string containing only the characters in at least one of the sets
-{a-z,A-Z,0-9,-,_, ,(,),.,;,:,&,%} or {,}, whose last character is not a
-whitespace and matches exactly the name (a metadata class assigned by
-SucurIndex) of the taxon stored in that file
+string containing only the characters in set {a-z,A-Z,0-9, ,-,_}, whose last
+character is not a whitespace and matches exactly the name (a metadata class
+assigned by SucurIndex) of the taxon stored in that file
 
 ### Rule 4
 A MboiDown v0.0.0 has exactly one occurence of the string
-"\n---\n## --- SucurIndex Metadata ---\n\nMboiDown v0.0.0\n\n---\n", which is
+"\n---\n## --- SucurIndex Metadata --- MboiDown :: v0.0.0 ---\n", which is
 denominated "SucurIndex metadata block delimiter"
 
 ### Rule 5
@@ -70,8 +69,8 @@ All lines belonging to the SucurIndex metadata block which are level 1 MarkDown
 headers are written sctritly following the format "# CLASSNAME", being
 CLASSNAME a string which exactly matches the canonical name of a SucurIndex
 metadata class. All SucurIndex metadata classes of the taxon represented by the
-file are present in the SucurIndex metadata block, excluding its name and
-description (and, thusly, including its id)
+file are present in the SucurIndex metadata block, excluding its id, name and
+description
 
 ### Rule 9
 All lines belonging to the SucurIndex metadata block which are not level 1
@@ -96,14 +95,7 @@ based schema
 
 ---
 
-## --- SucurIndex Metadata Block ---
-
-MboiDown v0.0.0
-
----
-
-### id
-00000000-0000-0000-0000-00000000
+## --- SucurIndex Metadata Block --- MboiDown :: v0.0.0 ---
 
 ### tags
 imaginary_file
@@ -124,4 +116,5 @@ MboiDown
 False
 
 ---
+
 "Punctures precede prose"
