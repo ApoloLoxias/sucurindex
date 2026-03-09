@@ -11,3 +11,7 @@ desktop // or laptop, server, etc.
 
 ### Location
 My house
+
+---
+
+"Bodies bear the burden of being"

@@ -15,3 +15,6 @@ DESKTOP-ABC123
 ### Users
 wsluser
 pichau
+
+---
+"Silence surrounds, serpents settle"
