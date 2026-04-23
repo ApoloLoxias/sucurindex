@@ -209,3 +209,5 @@ __marimo__/
 metadata/*
 
 bin
+
+/src/pkg
