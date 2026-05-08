@@ -13,3 +13,7 @@ type FileSystemE struct {
 	Mounts      []dataclasses.Link
 	Type        string
 }
+
+func (e FileSystemE) Taxon() dataclasses.Taxon {
+	return dataclasses.FileSystem
+}

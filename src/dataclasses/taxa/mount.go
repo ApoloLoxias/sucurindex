@@ -12,3 +12,7 @@ type MountE struct {
 	Host        dataclasses.Link
 	Path        string
 }
+
+func (e MountE) Taxon() dataclasses.Taxon {
+	return dataclasses.Mount
+}

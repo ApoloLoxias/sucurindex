@@ -18,3 +18,7 @@ type StorageE struct {
 	Volumes      []dataclasses.Link
 	Location     string
 }
+
+func (e StorageE) Taxon() dataclasses.Taxon {
+	return dataclasses.Storage
+}

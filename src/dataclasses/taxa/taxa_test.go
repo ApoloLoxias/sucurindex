@@ -1,9 +1,10 @@
 package taxa
 
 import (
+	"testing"
+
 	"github.com/ApoloLoxias/sucurindex/src/dataclasses"
 	"github.com/google/uuid"
-	"testing"
 )
 
 func TestFileE(t *testing.T) {
@@ -30,6 +31,9 @@ func TestFileE(t *testing.T) {
 		Missing: false,
 	}
 
+	if file.Taxon() != dataclasses.File {
+		t.Errorf("ID = %v, want %v", file.Taxon(), dataclasses.File)
+	}
 	if file.ID != id {
 		t.Errorf("ID = %v, want %v", file.ID, id)
 	}
@@ -57,6 +61,9 @@ func TestFileE(t *testing.T) {
 		Missing: false,
 	}
 
+	if file2.Taxon() != dataclasses.File {
+		t.Errorf("ID = %v, want %v", file.Taxon(), dataclasses.File)
+	}
 	if file2.Description != "" {
 		t.Errorf("Description = %q, want not nil", file2.Description)
 	}
@@ -87,6 +94,9 @@ func TestFileSystemE(t *testing.T) {
 		Type:        "NTFS_unix",
 	}
 
+	if fs.Taxon() != dataclasses.FileSystem {
+		t.Errorf("ID = %v, want %v", fs.Taxon(), dataclasses.FileSystem)
+	}
 	if fs.ID != id {
 		t.Errorf("ID = %v, want %v", fs.ID, id)
 	}
@@ -116,6 +126,9 @@ func TestHostE(t *testing.T) {
 		Users:       []string{"wuser", "wsluser"},
 	}
 
+	if host.Taxon() != dataclasses.Host {
+		t.Errorf("ID = %v, want %v", host.Taxon(), dataclasses.Host)
+	}
 	if host.ID != id {
 		t.Errorf("ID = %v, want %v", host.ID, id)
 	}
@@ -151,6 +164,9 @@ func TestMachineE(t *testing.T) {
 		Location:    "My house",
 	}
 
+	if machine.Taxon() != dataclasses.Machine {
+		t.Errorf("ID = %v, want %v", machine.Taxon(), dataclasses.Machine)
+	}
 	if machine.ID != id {
 		t.Errorf("ID = %v, want %v", machine.ID, id)
 	}
@@ -190,6 +206,9 @@ func TestMountE(t *testing.T) {
 		Path:        "C:\\",
 	}
 
+	if mount.Taxon() != dataclasses.Mount {
+		t.Errorf("ID = %v, want %v", mount.Taxon(), dataclasses.Mount)
+	}
 	if mount.ID != id {
 		t.Errorf("ID = %v, want %v", mount.ID, id)
 	}
@@ -244,6 +263,9 @@ func TestStorageE(t *testing.T) {
 		Location:     "My house, inside main desktop",
 	}
 
+	if storage.Taxon() != dataclasses.Storage {
+		t.Errorf("ID = %v, want %v", storage.Taxon(), dataclasses.Storage)
+	}
 	if storage.ID != id {
 		t.Errorf("ID = %v, want %v", storage.ID, id)
 	}
@@ -272,6 +294,9 @@ func TestVolumeE(t *testing.T) {
 		Type:        "NTFS",
 	}
 
+	if volume.Taxon() != dataclasses.Volume {
+		t.Errorf("ID = %v, want %v", volume.Taxon(), dataclasses.Volume)
+	}
 	if volume.ID != id {
 		t.Errorf("ID = %v, want %v", volume.ID, id)
 	}

@@ -1,6 +1,7 @@
 package taxa
 
 import (
+	"github.com/ApoloLoxias/sucurindex/src/dataclasses"
 	"github.com/google/uuid"
 )
 
@@ -11,4 +12,8 @@ type HostE struct {
 	OS          string
 	HostName    string
 	Users       []string
+}
+
+func (e HostE) Taxon() dataclasses.Taxon {
+	return dataclasses.Host
 }

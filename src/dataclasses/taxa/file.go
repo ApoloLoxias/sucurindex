@@ -16,3 +16,7 @@ type FileE struct {
 	Mtime       int
 	Missing     bool
 }
+
+func (e FileE) Taxon() dataclasses.Taxon {
+	return dataclasses.File
+}
