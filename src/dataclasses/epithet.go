@@ -14,4 +14,6 @@ const (
 
 type Epithet interface {
 	Taxon() Taxon
+	GenericMDS() [3]MetadataS
+	SpecificMDS() []MetadataS
 }
